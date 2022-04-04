@@ -48,11 +48,13 @@ pipeline {
             cleanWs()
         }
         failure {
+            slackSend (color: '#00FF00', message: "Job failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")
             mail to: 'shitunjay.kumar@mygurukulam.org',
             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
             body: "Something is wrong with ${env.BUILD_URL}"
         }
         success {
+            slackSend (color: '#FF0000', message: "Job Success: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")
             mail to: 'shitunjay.kumar@mygurukulam.org',
             subject: "Pipeline successful: ${currentBuild.fullDisplayName}",
             body: "This build is successful with ${env.BUILD_URL}"
